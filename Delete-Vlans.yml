@@ -13,4 +13,4 @@
   tasks: 
     - name: Delete all VLANs
       cisco.ios.ios_vlans:
-      state: deleted
+        state: deleted
