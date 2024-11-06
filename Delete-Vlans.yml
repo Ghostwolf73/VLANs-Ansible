@@ -13,8 +13,9 @@
   tasks: 
     - name: Delete VLANs
       cisco.ios.ios_vlans:
-        #line to delete certain vlans
+        #line to delete certain VLANs
         config:
           - vlan_id: 10
           - vlan_id: 20
+        #remove the above including config: if you want to delete all VLANs and add the vlan_id line to delete other defined VLANs
         state: deleted
