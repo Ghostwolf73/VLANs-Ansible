@@ -1,5 +1,6 @@
 ---
 - name: Merge provided configuration with device configuration
+  hosts: switches 
   cisco.ios.ios_vlans:
     config:
       - name: Vlan_10
