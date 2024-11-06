@@ -1,5 +1,5 @@
 #delete all vlans
-- name: Delete attributes of ALL VLANs
+- name: Delete attributes VLANs
   hosts: switches 
   connection: network_cli
   gather_facts: false
@@ -11,6 +11,10 @@
     ansible_become_method: enable
     ansible_become_password: cisco123 
   tasks: 
-    - name: Delete all VLANs
+    - name: Delete VLANs
       cisco.ios.ios_vlans:
+        #line to delete certain vlans
+        config:
+          - vlan_id: 10
+          - vlan_id: 20
         state: deleted
