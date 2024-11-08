@@ -2,7 +2,12 @@
 - name: Running VLAN config...
   hosts: switch
   gather_facts: false
- 
+
+  vars:
+    ansible_command_timeout: 60
+    ansible_become: yes
+    ansible_become_method: enable
+    ansible_become_password: cisco123
   tasks:
     - name: Create VLAN...
       ios_vlans:
