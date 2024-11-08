@@ -1,0 +1,45 @@
+---
+ansible_network_os: ios
+ansible_connection: network_cli
+ansible_user: solo
+ansible_ssh_pass: cisco123
+ansible_become: yes
+ 
+# Create VLAN input
+vlan:
+  - { name: Devs, id: 10 }
+  - { name: Security, id: 20 }
+  - { name: MGMT, id: 30 }
+ 
+# Create Trunk input
+trunk:
+  Sw1:
+    - { interface: e0/0, allow: "10,20" }
+  Sw2:
+    - { interface: e0/0, allow: "30,40" }
+  Sw3:
+    - { interface: e0/0, allow: "20,30" }
+  Sw4:
+    - { interface: e0/0, allow: "10,20,40" }
+  Sw5:
+    - { interface: e0/0, allow: 20 }
+  Sw6:
+    - { interface: e0/0, allow: 40 }
+ 
+# Create Access input
+access:
+  Sw1:
+    - { interface: e1/1, vlan_access: 20 }
+    - { interface: e1/0, vlan_access: 10 }
+  Sw2:
+    - { interface: e1/1, vlan_access: 40 }
+    - { interface: e1/0, vlan_access: 30 }
+  Sw3:
+    - { interface: e1/0, vlan_access: 20 }
+    - { interface: e1/1, vlan_access: 30 }
+  Sw4:
+    - { interface: e1/1, vlan_access: 20 }
+    - { interface: e1/0, vlan_access: 10 }
+    - { interface: e1/2, vlan_access: 40 }
+  Sw5:
+    - { interface: e0/1, vlan_access: 20 }
