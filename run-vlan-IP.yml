@@ -3,11 +3,14 @@
   hosts: switch
   gather_facts: false
 
+  #Varibales so that ansible can remote access the device and use this playbook to run configs
   vars:
     ansible_command_timeout: 60
     ansible_become: yes
     ansible_become_method: enable
     ansible_become_password: cisco123
+
+  #creating the tasks and creating the VLANs using the loop method
   tasks:
     - name: Create VLAN...
       ios_vlans:
@@ -18,7 +21,7 @@
             shutdown: disabled
         state: merged
       loop: "{{ vlan }}"
- 
+    #IP address configuration for VLANs
     - name: Set ip for VLAN...
       ios_config:
         lines:
@@ -28,7 +31,7 @@
           - no shutdown
       loop: "{{ ip_vlan[inventory_hostname] }}"
       when: ip_vlan[inventory_hostname] is defined
- 
+    #Trunk Configs
     - name: Config Trunk...
       ios_config:
         lines:
@@ -37,7 +40,7 @@
           - switchport trunk encapsulation dot1q
           - switchport trunk allowed vlan add {{ item.allow }}
       loop: "{{ trunk[inventory_hostname] }}"
- 
+    #assigning interfaces to VLANs
     - name: Config Access...
       ios_config:
         lines:
